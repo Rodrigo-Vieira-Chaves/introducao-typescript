@@ -30,7 +30,7 @@ class TransactionsService extends Service
         accountValidator.validateAccountPassword(request.account.password as string, accountRetrieved.password as string);
         const result = await transactionsDAO.getTransactionsByAccountID(accountRetrieved.accountID as string);
 
-        delete request.account.password;
+        // delete request.account.password;
         const echo =
         {
             client: (await clientsService.getClientByCPF(request.clientCPF)).data,
