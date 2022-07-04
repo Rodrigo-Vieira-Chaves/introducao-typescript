@@ -12,11 +12,6 @@ class APIResponseBuilder
             code: serviceResponse.code
         };
 
-        if (serviceResponse.echo)
-        {
-            response.echo = serviceResponse.echo;
-        }
-
         if (serviceResponse.data)
         {
             response.data = serviceResponse.data;

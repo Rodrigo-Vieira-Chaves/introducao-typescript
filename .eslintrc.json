@@ -23,7 +23,7 @@
             "always"
         ],
         "array-callback-return": "error",
-        "array-element-newline": "off",
+        "array-element-newline": "error",
         "arrow-body-style": "error",
         "arrow-parens": [
             "error",
@@ -231,7 +231,7 @@
             "error",
             "always"
         ],
-        "object-property-newline": "warn",
+        "object-property-newline": "error",
         "object-shorthand": "error",
         "one-var": "off",
         "one-var-declaration-per-line": "error",

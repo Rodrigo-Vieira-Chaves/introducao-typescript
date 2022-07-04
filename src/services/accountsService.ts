@@ -5,7 +5,6 @@ import { Service } from './Service';
 import { TransactionType } from '../models/TransactionType';
 import { accountsDAO } from '../repositories/DAOs/accountsDAO';
 import { accountsPropertiesValidator } from '../validators/accountsPropertiesValidator';
-import { clientsPropertiesValidator } from '../validators/clientsPropertiesValidator';
 import { clientsService } from './clientsService';
 import { generateRandomAccount } from '../utils/generateRandomAccount';
 
@@ -47,7 +46,6 @@ class AccountsService extends Service
     async createAccount (newAccount: AccountCreateDTO)
     {
         accountsPropertiesValidator.validateAccountPassword(newAccount.password);
-        clientsPropertiesValidator.validateAll(newAccount.client);
 
         let clientID = '';
         try
@@ -67,15 +65,9 @@ class AccountsService extends Service
         const randomAccount = generateRandomAccount();
         randomAccount.password = newAccount.password;
 
-        const responseObject =
-        [
-            {
-                client: newAccount.client,
-                createdAccount: await accountsDAO.createAccount(clientID, randomAccount)
-            }
-        ];
+        const result = await accountsDAO.createAccount(clientID, randomAccount);
 
-        return this.serviceResponseBuilder(responseObject, 'Erro ao inserir conta.', 201);
+        return this.serviceResponseBuilder(result, 'Erro ao inserir conta.', 201);
     }
 
     async updateAccountBalance (accountID: string, transactionType: TransactionType, ammount: number)

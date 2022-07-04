@@ -1,6 +1,7 @@
 import { AccountDTO } from '../models/DTOs/AccountDTO';
 import { InsufficientBalanceError } from '../errors/InsufficientBalanceError';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
+import { ValidationError } from '../errors/ValidationError';
 import { accountsPropertiesValidator } from './accountsPropertiesValidator';
 import { accountsService } from '../services/accountsService';
 import { clientsPropertiesValidator } from './clientsPropertiesValidator';
@@ -18,7 +19,7 @@ class AccountValidator
 
         if (accountRetrieved.clientID !== clientID)
         {
-            throw new UnauthorizedError(`O cliente ${clientCPF} não é dono da conta informada.`);
+            throw new ValidationError(`O cliente ${clientCPF} não é dono da conta informada.`);
         }
 
         return accountRetrieved;
