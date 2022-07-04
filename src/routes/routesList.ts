@@ -1,67 +1,31 @@
-import express, { Express } from 'express';
-import { accountsController } from '../controllers/accountsController';
-import { transactionsController } from '../controllers/transactionsController';
+import { Express } from 'express';
+import { accountsRoutes } from './accountsRoutes';
+import { clientsRoutes } from './clientsRoutes';
+import { createAccountRoutes } from './createAccountRoutes';
+import { makeDepositRoutes } from './makeDepositRoutes';
+import { makeTransferRoutes } from './makeTransferRoutes';
+import { makeWithdrawRoutes } from './makeWithdrawRoutes';
+import { requestAccountStatementRoutes } from './requestAccountStatementRoutes';
+import { transactionsRoutes } from './transactionsRoutes';
 
-class Routes
+class RoutesList
 {
     initRoutes (app: Express)
     {
-        app.use('/getAllAccounts', this.getAllAccounts());
-        app.use('/createAccount', this.configCreateAccountRoutes());
-        app.use('/makeDeposit', this.configMakeDepositRoutes());
-        app.use('/makeWithdraw', this.configMakeWithdrawRoutes());
-        app.use('/makeTransfer', this.configMakeTransferRoutes());
-        app.use('/getStatements', this.configGetStatementsRoutes());
-    }
+        // TODO retirar, apenas para testes
+        app.use('/clients', clientsRoutes);
+        // TODO retirar, apenas para testes
+        app.use('/accounts', accountsRoutes);
+        // TODO retirar, apenas para testes
+        app.use('/transactions', transactionsRoutes);
 
-    private getAllAccounts ()
-    {
-        const getAllAccountsRoutes = express.Router();
-        getAllAccountsRoutes.get('/', accountsController.getAllAccounts.bind(accountsController));
-
-        return getAllAccountsRoutes;
-    }
-
-    private configCreateAccountRoutes ()
-    {
-        const createAccountRoutes = express.Router();
-        createAccountRoutes.post('/', accountsController.createAccount.bind(accountsController));
-
-        return createAccountRoutes;
-    }
-
-    private configMakeDepositRoutes ()
-    {
-        const makeDepositRoutes = express.Router();
-        makeDepositRoutes.post('/', transactionsController.makeDeposit.bind(transactionsController));
-
-        return makeDepositRoutes;
-    }
-
-    private configMakeWithdrawRoutes ()
-    {
-        const makeWithdrawRoutes = express.Router();
-        makeWithdrawRoutes.post('/', transactionsController.makeWithdraw.bind(transactionsController));
-
-        return makeWithdrawRoutes;
-    }
-
-    private configMakeTransferRoutes ()
-    {
-        const makeTransferRoutes = express.Router();
-        makeTransferRoutes.post('/', transactionsController.makeTransfer.bind(transactionsController));
-
-        return makeTransferRoutes;
-    }
-
-    private configGetStatementsRoutes ()
-    {
-        const getStatementsRoutes = express.Router();
-        getStatementsRoutes.get('/', transactionsController.getStatementsOfAccount.bind(transactionsController));
-
-        return getStatementsRoutes;
+        app.use('/createAccount', createAccountRoutes);
+        app.use('/makeDeposit', makeDepositRoutes);
+        app.use('/makeWithdraw', makeWithdrawRoutes);
+        app.use('/makeTransfer', makeTransferRoutes);
+        app.use('/requestAccountStatement', requestAccountStatementRoutes);
     }
 }
 
-const routes = new Routes();
-export { routes };
+const routesList = new RoutesList();
+export { routesList };

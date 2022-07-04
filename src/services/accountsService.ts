@@ -67,9 +67,15 @@ class AccountsService extends Service
         const randomAccount = generateRandomAccount();
         randomAccount.password = newAccount.password;
 
-        const result = await accountsDAO.createAccount(clientID, randomAccount);
+        const responseObject =
+        [
+            {
+                client: newAccount.client,
+                createdAccount: await accountsDAO.createAccount(clientID, randomAccount)
+            }
+        ];
 
-        return this.serviceResponseBuilder(result, 'Erro ao inserir conta.', 201, newAccount.client);
+        return this.serviceResponseBuilder(responseObject, 'Erro ao inserir conta.', 201);
     }
 
     async updateAccountBalance (accountID: string, transactionType: TransactionType, ammount: number)

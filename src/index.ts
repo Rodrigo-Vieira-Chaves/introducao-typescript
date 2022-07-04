@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import { routes } from './routes/routesList';
+import { routesList } from './routes/routesList';
 
 dotenv.config();
 
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-routes.initRoutes(app);
+routesList.initRoutes(app);
 
 const port = process.env.PORT || 3000;
 

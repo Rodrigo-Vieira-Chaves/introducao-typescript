@@ -24,13 +24,13 @@ class TransactionsService extends Service
         return this.serviceResponseBuilder(result, 'Não há transações efetuadas.');
     }
 
-    async getStatementsOfAccount (request: AccountValidateDTO)
+    async getTransactionsFromAccount (request: AccountValidateDTO)
     {
         const accountRetrieved = await accountValidator.validateAccountWithClient(request.clientCPF, request.account);
         accountValidator.validateAccountPassword(request.account.password as string, accountRetrieved.password as string);
         const result = await transactionsDAO.getTransactionsByAccountID(accountRetrieved.accountID as string);
 
-        delete accountRetrieved.password;
+        delete request.account.password;
         const echo =
         {
             client: (await clientsService.getClientByCPF(request.clientCPF)).data,
